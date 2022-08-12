@@ -10,15 +10,24 @@
 .botext{
   font-weight: 100;
   font-family: sans-serif;
-  font-size: 30px;
+  font-size: 18px;
   color: #fff;
   position: absolute;
   width: 100%;
   text-align: center;
   bottom: 500px;
   letter-spacing: 1px;
-
 }
+
+
+@media only screen and (max-width: 600px) {
+  .botext{
+    font-size: 15px;
+
+    bottom: 420px;
+  }
+}
+
 h1 {
   font-weight: 100;
   font-family: sans-serif;
@@ -198,11 +207,14 @@ h1 .touch {
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<h1><span class="web">move mouse</span><span class="touch">swipe</span> to change direction</h1>
 
 
 <div class="backgroundnoy">
+
+  <div class="botextead">ABOUT</div>
+
   <div class="botext">
+    <p style="font-size: 22px;">ABOUT</p>
     Codesempai is a platform where you learn programming
     Get helpful content, and you will learn to do unique projects.
     With step-by-step tutorials. Currently, I'm working on it ( writing contents ).
