@@ -2585,19 +2585,28 @@ display:block;
 body::before{
 width:calc(var(--main-width) * var(--unit));
 height:calc(var(--main-height) * var(--unit));
-left:calc(50% + var(--main-left) * var(--unit));
+left:calc(75% + var(--main-left) * var(--unit));
 top:calc(50% + var(--main-top) * var(--unit));
 
 box-shadow: 2px 31px 0px -26px var(--shadow);
 border-radius: 0% 0% 7% 7%;
 }
 
+
+
+
+
+
+
+
+
+
 /* layer - foreground (LCD Display) */
 body::after{
 content: var(--message);
 width:calc(var(--lcd-width) * var(--unit));
 height:calc(var(--lcd-height) * var(--unit));
-left:calc(50% + var(--lcd-left) * var(--unit));
+left:calc(75% + var(--lcd-left) * var(--unit));
 top:calc(50% + var(--lcd-top) * var(--unit));
 padding-top:var(--msg-padding);
 box-sizing:border-box;
@@ -2719,12 +2728,38 @@ background-image:
 .unopara{
 color: whitesmoke;
 padding-left: 30px;
-padding-top: 30px;
-font-size: 23px;
+padding-top: 90px;
+font-size: 16px;
 }
 
 
+@media only screen and (min-width: 400px) {
+  body::after{
+    top: calc(70% + var(--lcd-top) * var(--unit));
+    left: calc(50% + var(--lcd-left) * var(--unit));
+    }
+  body::before{
+    top: calc(70% + var(--main-top) * var(--unit));
+    left: calc(50% + var(--main-left) * var(--unit));
 
+  }
+
+.unopara{
+padding-left: 20px;
+padding-top: 15px;
+font-size: 15px;
+}
+
+.itemx {
+    font-size: 15px;
+}
+.boxy {
+    width: 170px;
+    height: 45px;
+    margin: 10px;
+}
+
+}
 
 .boxcont {
     display: flex;
@@ -2733,17 +2768,17 @@ font-size: 23px;
 }
 
 .boxy {
-    width: 250px;
-    height: 65px;
-    margin: 9px;
+    width: 195px;
+    height: 50px;
+    margin: 10px;
 }
-
-
-
 
 .itemx {
-    font-size: 23px;
+    font-size: 19px;
 }
+
+
+
 </style>
 
 
