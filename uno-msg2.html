@@ -2851,25 +2851,46 @@ font-size: 16px;
 font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-@media only screen and (max-width: 400px) {
+
+@media screen and (max-width: 400px) and (min-width: 100px), (min-width: 1100px) {
   body::after{
-    top: calc(73% + var(--lcd-top) * var(--unit));
+display: none;
+    }
+  body::before{
+	display: none;
+
+  }
+
+  .unopara2{
+padding-top: 1vh;
+} 
+}
+
+
+
+
+
+@media only screen and (min-width: 400px) {
+  body::after{
+    top: calc(45% + var(--lcd-top) * var(--unit));
     left: calc(50% + var(--lcd-left) * var(--unit));
     }
   body::before{
-    top: calc(73% + var(--main-top) * var(--unit));
+    top: calc(45% + var(--main-top) * var(--unit));
     left: calc(50% + var(--main-left) * var(--unit));
 
   }
+
 
 .unopara1{
 padding-left: 20px;
 padding-top: 10px;
 font-size: 15px;
+
 }
 .unopara2{
 padding-left: 20px;
-padding-top: 10px;
+padding-top: 31vh;
 font-size: 15px;
 }
 .itemx {
@@ -2885,6 +2906,16 @@ font-size: 15px;
 
 
 
+#frame {
+height: 800px;
+width: 100%;
+}
+
+
+.unoparasiz{
+font-size: 19px;
+padding-left: 0px;
+}
 
 
 
@@ -2895,8 +2926,9 @@ font-size: 15px;
 <body>
 
 <div class="unopara1">
-	<h1 style="font-size: 30px;">         <i class="fa-brands fa-youtube"></i>
- 		Subscribe Us On Youtube</h1>
+	<div class="unopara1 unoparasiz">
+		<i class="fa-brands fa-youtube"></i>
+ 		Subscribe Us On Youtube</div>
 
   <p>Join our YouTube channel to learn amazing content. </p>
   It will inspire me to create new projects for you, 
@@ -2919,8 +2951,10 @@ font-size: 15px;
 	
 	  <div class="unopara2">
 
-		<h1 style="font-size: 30px;"> <i class="fa-solid fa-diagram-project"></i> Learn How To Make Jarvis | AI Assistant</h1>
-	  <p>Make Jarvis | AI assistant from scratch with this tutorial. </p>
+		<div class="unopara1 unoparasiz">
+			<i class="fa-solid fa-diagram-project"></i> Learn How To Make Jarvis 
+		</div>	 
+		 <p>Make Jarvis | AI assistant from scratch with this tutorial. </p>
 		Concept development from basic to advanced , 
 	  <p> Make your own assistant today :)</p>
      </div>
