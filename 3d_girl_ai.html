@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<style>
+
+body{
+  margin-top:30px;
+  background-color:black ;
+}
+.jumbotron {
+    background-color: #252626;
+	color: #c3c3c3;
+
+}
+@media (min-width: 576px)
+.jumbotron {
+    padding: 2rem 2rem; !important
+}
+
+
+
+h2{
+	 color: gray;
+}
+		
+img{
+  width: 1040px;
+  height: 700px;
+}
+
+p{
+	 font-size: 12px;
+	 color: #c3c3c3;
+}
+		
+#panel,#flip{
+	 padding:5px;
+	 text-align:center;			
+	 border:solid 1px #c3c3c3;
+}
+
+#panel{
+	 padding:50px;
+	 display:none;
+}
+
+canvas{		  
+	 position : absolute;
+	 display: block;
+	 margin: 0 auto;
+}
+
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<canvas z-index="9999999999"></canvas>
+		<div class="container">
+		  <div class="jumbotron">
+			  
+		  <h1 class="text-center">Artificial Intelligence</h1>
+		    <!-- <h2 class="text-center"><em>ALL YOU NEED TO KNOW</em></h2> -->
+		    <div id="demo" class="carousel slide" data-ride="carousel">
+		 
+		  <!-- 指示符 -->
+		  <ul class="carousel-indicators">
+		    <li data-target="#demo" data-slide-to="0" class="active"></li>
+		    <li data-target="#demo" data-slide-to="1"></li>
+		    <li data-target="#demo" data-slide-to="2"></li>
+		  </ul>
+		 
+		  <!-- 轮播图片 -->
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHzheySZJ4_0O1QS01wFwEpiyYWS7mCK2uNyY2P53jp--m-xd0GtGoVYxVOM41Bj6jmpygPi89hJWDdMXlFnpf2TfnMnMt7hU5slkUVXgOBnoav_ueuI4KB83cj8sDniXOO3LhHhgDWrcuO-wxj7zdsO8UdzT_Z_Si7sbSAGwQHYSV4cpNtc002lq1hw/s1080/Artificial%20Intelligence%20codesempai.png" class="img-thumbnail">
+		    </div>
+		    <div class="carousel-item">
+		      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4X1LGSkn2HUweFBdM6gYmF0nNmB2XsyOekII7q9bij72J6cSsKGNNWg34cgFnUat8klpjjUGESNbn5oQiAz2zDz4PF2r8f5qfnnXn1w0kf0ac3yCUZhH9Xio-FzjhvIB8bI6naO1kzHY2dhFrKc_BoUcD9H1DwmInChvp84TtsNbAiRqIantbeJrULg/s1080/Machine%20Learning%20codesempai.png" class="img-thumbnail">
+		    </div>
+		    <div class="carousel-item">
+		      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjdKqr5ltRiO1z0xS36RQi6vZ5R5BQX01u6DDYxBBsMIe4hvibR7qeaAPel_DNrKyRYmSniaxvuxM_5Th8RJryZcxm8_uG00-CjIIfheI7AYIahKybh-usnGnhf-9m6eHQBQnX47f-NIiDnWNp9rgzeR2cgEPC_HK0dPDUmt1XHwGBPEsNEMViijHnnRg/s1080/Deep%20learning%20codesempai.png" class="img-thumbnail">
+		    </div>
+			<div class="carousel-item">
+				<img src="https://cdn.ttgtmedia.com/rms/onlineImages/enterpriseai-evolution_of_ai-f.png" class="img-thumbnail">
+			  </div>
+		  </div>
+		 
+		  <!-- 左右切换按钮 -->
+		  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+		    <span class="carousel-control-prev-icon"></span>
+		  </a>
+		  <a class="carousel-control-next" href="#demo" data-slide="next">
+		    <span class="carousel-control-next-icon"></span>
+		  </a>
+		 
+		</div>
+		<!--简介-->   
+		    <div id="content" class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+		          <h3>Questions:</h3>
+		          <ul>
+		            <li><strong>What is the artificial intelligence?</strong> 
+						<p>  Artificial intelligence is the simulation of human intelligence processes by machines, especially computer systems. Specific applications of AI include expert systems, natural language processing, speech recognition and machine vision.</p></li>
+
+
+		            <li><strong>What are the 4 types of AI?
+					</strong> <p>There are a lot of ongoing discoveries and developments, most of which are divided into four categories: reactive machines, limited memory, theory of mind, and self-aware AI</p></li>
+
+
+		            <li><strong>What is an example of artificial intelligence?
+					</strong> <p>Facial Detection and Recognition: 
+
+						Using virtual filters on our faces when taking pictures and using face ID for unlocking our phones are two examples of artificial intelligence that are now part of our daily lives.</p></li>
+
+
+		            <li><strong>What is purpose of artificial intelligence?
+					</strong> <p>Artificial intelligence (AI) makes it possible for machines to learn from experience, adjust to new inputs and perform human-like tasks. Most AI examples that you hear about today – from chess-playing computers to self-driving cars – rely heavily on deep learning and natural language processing.
+					</p></li>    
+					
+					
+		            <li><strong>Who is father of AI?
+					</strong> <p>Abstract: If John McCarthy, the father of AI, were to coin a new phrase for "artificial intelligence" today, he would probably use "computational intelligence." McCarthy is not just the father of AI, he is also the inventor of the Lisp (list processing) language.
+					</p></li>    
+					
+					
+		            <li><strong>What type of AI is Google?
+					</strong> <p>Google Search is a form of narrow AI, as is predictive analytics, or virtual assistants. Artificial general intelligence (AGI) would be the ability for a machine to “sense, think, and act” just like a human.
+					</p></li>  
+					
+					
+
+		          </ul>
+		          <a href="" target="_blank"><button type="button" class="btn btn-info"><i class="fa fa-info-circle"></i> Info</button></a>		        
+			</div>
+		    
+			
+		  </div>
+		</div> 
+		<div class="waifu">
+		        <div class="waifu-tips"></div>
+		        <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+		        <div class="waifu-tool">
+		            <span class="fui-home"></span>
+		            <span class="fui-chat"></span>
+		            <span class="fui-eye"></span>
+		            <span class="fui-user"></span>
+		            <span class="fui-photo"></span>
+		            <span class="fui-info-circle"></span>
+		            <span class="fui-cross"></span>
+		        </div>
+		    </div>
+		        
+			<script src="https://blog-static.cnblogs.com/files/yjlblog/cursor-effects.js"></script>	
+			<canvas width="1366" height="662" style="position: fixed; left: 0px; top: 0px; z-index: 2147483647; pointer-events: none;"></canvas>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+<script src='https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js'></script>
+<script src='https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js'></script>
+<script src='https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js'></script>
+<script>
+/* 鼠标特效 */
+var a_idx = 0;
+			jQuery(document).ready(function($) {
+			    $("body").click(function(e) {
+			        var a = new Array("❤富强❤","❤民主❤","❤文明❤","❤和谐❤","❤自由❤","❤平等❤","❤公正❤","❤法治❤","❤爱国❤","❤敬业❤","❤诚信❤","❤友善❤");
+			        var $i = $("<span></span>").text(a[a_idx]);
+			        a_idx = (a_idx + 1) % a.length;
+			        var x = e.pageX,
+			        y = e.pageY;
+			        $i.css({
+			            "z-index": 99,
+			            "top": y - 20,
+			            "left": x,
+			            "position": "absolute",
+			            "font-weight": "bold",
+			            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+			        });
+			        $("body").append($i);
+			        $i.animate({
+			            "top": y - 180,
+			            "opacity": 0
+			        },
+			        1500,
+			        function() {
+			            $i.remove();
+			        });
+			    });
+});
+
+$(document).ready(function(){	
+		 $(".container").addClass("animated shake");
+		 $("button").addClass("animated shake"); 
+		 $("#flip").click(function(){
+		     $("#panel").slideToggle("slow");
+		   });
+		});
+		L2Dwidget.init({
+		        "model": {
+		            jsonPath: "https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json",
+		            "scale": 1
+		        },
+		        "display": {
+		            "position": "left",
+		            "width": 100,
+		            "height": 200,
+		            "hOffset": 0,
+		            "vOffset": -20
+		        },
+		        "mobile": {
+		            "show": true,
+		            "scale": 0.5
+		        },
+		        "react": {
+		            "opacityDefault": 1,
+		            "opacityOnHover": 1
+		        }
+});
+
+</script>
+
+</body>
+</html>
