@@ -37,7 +37,7 @@ span {
 
 /* Button Styles */
 
-.button {
+.buttoncool {
   display: inline-flex;
   height: 40px;
   width: 150px;
@@ -73,7 +73,7 @@ a {
   padding: 0 5px;
 }
 
-a#button-1:hover img {
+a#buttoncool-1:hover img {
   width: 15px;
   opacity: 1;
   transform: translateX(50px);
@@ -82,13 +82,13 @@ a#button-1:hover img {
 
 /* Second Button */
 
-#button-2 {
+#buttoncool-2 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-#button-2 a {
+#buttoncool-2 a {
   position: relative;
   transition: all .35s ease-Out;
 }
@@ -103,24 +103,24 @@ a#button-1:hover img {
   bottom: 0;
 }
 
-#button-2:hover #slide {
+#buttoncool-2:hover #slide {
   left: 0;
 }
 
-#button-2:hover a {
+#buttoncool-2:hover a {
   color: #2D3142;
 }
 
 
 /* Third Button */
 
-#button-3 {
+#buttoncool-3 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-#button-3 a {
+#buttoncool-3 a {
   position: relative;
   transition: all .45s ease-Out;
 }
@@ -138,7 +138,7 @@ a#button-1:hover img {
   left: 70px;
 }
 
-#button-3:hover #circle {
+#buttoncool-3:hover #circle {
   width: 200%;
   height: 500%;
   opacity: 1;
@@ -146,20 +146,20 @@ a#button-1:hover img {
   left: -70px;
 }
 
-#button-3:hover a {
+#buttoncool-3:hover a {
   color: #2D3142;
 }
 
 
 /* Fourth Button */
 
-#button-4 {
+#buttoncool-4 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-#button-4 a {
+#buttoncool-4 a {
   position: relative;
   transition: all .45s ease-Out;
 }
@@ -176,20 +176,20 @@ a#button-1:hover img {
   bottom: 0;
 }
 
-#button-4:hover #underline {
+#buttoncool-4:hover #underline {
   left: 0;
 }
 
 
 /* Fifth Button */
 
-#button-5 {
+#buttoncool-5 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-#button-5 a {
+#buttoncool-5 a {
   position: relative;
   transition: all .45s ease-Out;
 }
@@ -205,24 +205,24 @@ a#button-1:hover img {
   transition: all .3s ease-Out;
 }
 
-#button-5:hover #translate {
+#buttoncool-5:hover #translate {
   left: 0;
 }
 
-#button-5:hover a {
+#buttoncool-5:hover a {
   color: #2D3142;
 }
 
 
 /* Sixth Button */
 
-#button-6 {
+#buttoncool-6 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-#button-6 a {
+#buttoncool-6 a {
   position: relative;
   transition: all .45s ease-Out;
 }
@@ -239,7 +239,7 @@ a#button-1:hover img {
   transition: all .5s ease-Out;
 }
 
-#button-6:hover #spin {
+#buttoncool-6:hover #spin {
   width: 200%;
   height: 500%;
   opacity: 1;
@@ -249,20 +249,20 @@ a#button-1:hover img {
   transform: rotate(80deg);
 }
 
-#button-6:hover a {
+#buttoncool-6:hover a {
   color: #2D3142;
 }
 
 
 /* Seventh Button */
 
-#button-7 {
+#buttoncool-7 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-#button-7 a {
+#buttoncool-7 a {
   position: relative;
   left: 0;
   transition: all .35s ease-Out;
@@ -282,16 +282,16 @@ a#button-1:hover img {
   bottom: 0;
 }
 
-#button-7 img {
+#buttoncool-7 img {
   width: 20px;
   height: auto;
 }
 
-#button-7:hover #dub-arrow {
+#buttoncool-7:hover #dub-arrow {
   left: 0;
 }
 
-#button-7:hover a {
+#buttoncool-7:hover a {
   left: 150px;
 }
 
