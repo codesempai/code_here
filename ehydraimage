@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+<style>
+
+
+body, *
+{
+	margin: 0;
+	padding: 0;
+}
+body
+{
+	background-color: #EEE;
+}
+div.content
+{
+	position: relative;
+	margin: auto;
+	top: 40px;
+	max-width: 800px;
+	height: 450px;
+	background-color: rgba(0, 0, 0, .1);
+	border: 3px solid #333;
+	display: flex;
+}
+div.content img
+{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: all ease-in-out .5s;
+	z-index: 1;
+}
+div.content:hover img
+{
+	opacity: 1;
+}
+div.content > div.spans1,
+div.content > div.spans2
+{
+	position: absolute;
+	width: 50%;
+	height: 100%;
+	z-index: 2;
+	overflow: hidden;
+}
+div.content > div:nth-child(2)
+{
+	right: 0;
+}
+div.content > div span
+{
+	position: relative;
+	display: block;
+	width: 100%;
+	height: calc(100% / 5);
+	background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhc2R7OSaAsFyZ7BmOdh5MfTDNYjFXRdlYHJ6oiJ-PznZ5lOysr2-I_TXY0jFRnUhrY5NgnrIoEgpJ8hkmfzGyieqbVQivIwGuFUH48jlPwrktxKLL9lW5U5oWlMXB--_ArDZxIMTcH_AKzthrr7Tw6f8pDqXph_X-QH9j30emB3NIYsKDzb0soIVkqC4yI/s734/Belarus%20Ehydra.png');
+	background-size: 800px 450px;
+	left: 0;
+}
+div.content > div.spans1 span:nth-child(1)
+{
+	background-position: 100% 0%;
+	transition: all ease-in-out 0.4s
+}
+div.content > div.spans1 span:nth-child(2)
+{
+	background-position: 100% 25%;
+	transition: 0.5s
+}
+div.content > div.spans1 span:nth-child(3)
+{
+	background-position: 100% 50%;
+	transition: 0.6s
+}
+div.content > div.spans1 span:nth-child(4)
+{
+	background-position: 100% 75%;
+	transition: 0.7s
+}
+div.content > div.spans1 span:nth-child(5)
+{
+	background-position: 100% 100%;
+	transition: 0.8s
+}
+div.content > div.spans2 span:nth-child(1)
+{
+	background-position: 0% 0%;
+	transition: 0.4s
+}
+div.content > div.spans2 span:nth-child(2)
+{
+	background-position: 0% 25%;
+	transition: 0.5s
+}
+div.content > div.spans2 span:nth-child(3)
+{
+	background-position: 0% 50%;
+	transition: 0.6s
+}
+div.content > div.spans2 span:nth-child(4)
+{
+	background-position: 0% 75%;
+	transition: 0.7s
+}
+div.content > div.spans2 span:nth-child(5)
+{
+	background-position: 0% 100%;
+	transition: 0.8s
+}
+div.content div.inputs
+{
+	position: absolute;
+	bottom: -25px;
+	left: 50%;
+	transform: translateX(-50px);
+}
+
+	</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="content">
+		<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsR86cn87GUNBKzl4KP8WI0PBr2IIJaS5DJmyoupIAeAyJjK54NN_sOey6DJQypBH41vLfltd79N_65MAC4s-BCIL2j7ErYW4-pk_D9HVNpHlH18jmW9gS6hQP7ImhOK6Qran6BNGCeHxAIwyrkK8z8VQDHtFzG3ALJN0wPCu86ED8t1PpMLDrIn7klPEC/s734/KPIT%20Ehydra.png" />
+		<div class="spans1">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<div class="spans2">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<div class="inputs">
+<p>Belarus and KPIT</p>
+		</div>
+	</div>
+<!-- partial -->
+  <script src='https://code.jquery.com/jquery-3.3.1.js'></script>
+  
+  <script>
+
+var width;
+		var height;
+		$("div.content > div.spans1, div.content > div.spans2").hover( function (e) {
+			$("div.spans1 span").css('left', '100%');
+			$("div.spans2 span").css('left', '-100%');
+		}, function () {
+			$("div.spans1 span").css('left', '0');
+			$("div.spans2 span").css('left', '0');
+		});
+		$(window).resize(function () {
+			width = $("div.content").width();
+			height = $("div.content").height();
+			$("div.content").css('height', (width / 1.77777777777));
+			$("div.content > div span").css('background-size', width + 'px ' + height + 'px');
+		});
+		$("div.content div.inputs input[type='radio']").change(function () {
+			$("div.content img").attr('src', $(this).val());
+		});
+
+  </script>
+
+</body>
+</html>
