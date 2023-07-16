@@ -14,8 +14,10 @@ body
 {
 	background-color: #EEE;
 }
-div.content
-{
+
+
+
+div.content {
 	position: relative;
 	margin: auto;
 	top: 40px;
@@ -25,8 +27,8 @@ div.content
 	border: 3px solid #333;
 	display: flex;
 }
-div.content img
-{
+
+div.content img {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -34,6 +36,11 @@ div.content img
 	transition: all ease-in-out .5s;
 	z-index: 1;
 }
+
+
+
+
+
 div.content:hover img
 {
 	opacity: 1;
@@ -147,27 +154,41 @@ div.content div.inputs
   <script src='https://code.jquery.com/jquery-3.3.1.js'></script>
   
   <script>
-
-var width;
-		var height;
-		$("div.content > div.spans1, div.content > div.spans2").hover( function (e) {
-			$("div.spans1 span").css('left', '100%');
-			$("div.spans2 span").css('left', '-100%');
-		}, function () {
-			$("div.spans1 span").css('left', '0');
-			$("div.spans2 span").css('left', '0');
-		});
-		$(window).resize(function () {
-			width = $("div.content").width();
-			height = $("div.content").height();
-			$("div.content").css('height', (width / 1.77777777777));
-			$("div.content > div span").css('background-size', width + 'px ' + height + 'px');
-		});
-		$("div.content div.inputs input[type='radio']").change(function () {
-			$("div.content img").attr('src', $(this).val());
-		});
-
+	var width;
+	var height;
+  
+	// Function to update the height of div.content
+	function updateContentHeight() {
+	  width = $("div.content").width();
+	  height = width / 1.77777777777; // Calculate the desired height based on width
+  
+	  $("div.content").css('height', height + 'px');
+	  $("div.content > div span").css('background-size', width + 'px ' + height + 'px');
+	}
+  
+	// Hover function
+	$("div.content > div.spans1, div.content > div.spans2").hover(function(e) {
+	  $("div.spans1 span").css('left', '100%');
+	  $("div.spans2 span").css('left', '-100%');
+	}, function() {
+	  $("div.spans1 span").css('left', '0');
+	  $("div.spans2 span").css('left', '0');
+	});
+  
+	// Resize event handler
+	$(window).resize(function() {
+	  updateContentHeight();
+	});
+  
+	// Radio button change event handler
+	$("div.content div.inputs input[type='radio']").change(function() {
+	  $("div.content img").attr('src', $(this).val());
+	});
+  
+	// Initial update of the content height
+	updateContentHeight();
   </script>
+  
 
 </body>
 </html>
