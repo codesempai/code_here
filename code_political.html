@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Cube Effect Slider | Swiper JS and tsParticles</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+
+<style>
+
+
+
+.accordion {
+  background-color: #fbeee5;
+  color: #ff0008;
+  font-weight: bold;
+
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.responsive {
+  width: 100%;
+  height: auto;
+}
+
+
+
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Nunito:wght@300;600&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  background-image: radial-gradient(
+      circle at 20% 100%,
+      rgba(184, 184, 184, 0.1) 0%,
+      rgba(184, 184, 184, 0.1) 33%,
+      rgba(96, 96, 96, 0.1) 33%,
+      rgba(96, 96, 96, 0.1) 66%,
+      rgba(7, 7, 7, 0.1) 66%,
+      rgba(7, 7, 7, 0.1) 99%
+    ),
+    linear-gradient(40deg, #040a22, #ff7161, #ff0000, #ff9494);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+section {
+  display: grid;
+  grid-template-columns: 50% 45%;
+  place-items: center;
+  gap: 60px;
+  min-height: 100vh;
+  padding: 20px 60px;
+}
+
+/* CONTENT */
+
+.content {
+  max-width: 2400px;
+}
+
+.content h1 {
+  font-family: "Comfortaa", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  margin-bottom: 36px;
+  color: #fff;
+}
+
+.content p {
+  font-size: clamp(1rem, 4vw, 1.1rem);
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.content button {
+  background: #eaeaea;
+  color: #202134;
+  font-size: clamp(0.9rem, 4vw, 1rem);
+  font-weight: 600;
+  border: 0;
+  outline: 0;
+  padding: 8px 14px;
+  border-radius: 7px;
+  transform: scale(1);
+  transition: all 0.4s ease-in;
+  cursor: pointer;
+}
+
+.content button:is(:hover, :focus) {
+  transform: scale(0.98);
+  background-color: #6f7aa6;
+  color: #eaeaea;
+}
+
+/* SLIDER */
+
+.swiper {
+  position: relative;
+  width: 400px;
+  height: 490px;
+}
+
+.swiper-slide {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  user-select: none;
+  border-radius: 20px;
+}
+
+.cost {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  padding: 6px 10px;
+  color: #fff;
+  font-size: clamp(0.8rem, 4vw, 0.9rem);
+  font-weight: 600;
+}
+
+.dark-text {
+  color: #202134;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.overlay {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 150px;
+  padding: 10px 20px;
+  background: rgba(93, 95, 145, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  border-radius: 0 0 20px 20px;
+}
+
+.overlay h1 {
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: 600;
+}
+
+.overlay p {
+  font-size: clamp(0.8rem, 4vw, 0.9rem);
+  font-weight: 300;
+  line-height: 1.3;
+}
+
+.ratings {
+  display: flex;
+  column-gap: 10px;
+  margin-top: -6px;
+}
+
+.ratings span {
+  font-size: clamp(0.8rem, 4vw, 0.9rem);
+  font-weight: 300;
+}
+
+.star {
+  color: #afe312;
+}
+
+@media (max-width: 1050px) {
+  .swiper {
+    width: 350px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 930px) {
+  section {
+    grid-template-columns: 100%;
+    grid-template-rows: 55% 40%;
+    grid-template-areas:
+      "slider"
+      "content";
+    place-items: center;
+    gap: 64px;
+    padding: 60px;
+  }
+
+  .swiper {
+    grid-area: slider;
+  }
+
+  .content {
+    grid-area: content;
+    text-align: center;
+  }
+
+  .content h1 {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 470px) {
+  section {
+    padding: 40px 40px 60px;
+  }
+
+  .swiper {
+    width: 300px;
+    height: 400px;
+  }
+}
+
+</style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body>
+    <div id="tsparticles"></div>
+    <section>
+      <div class="content">
+        <h1>महाराष्ट्र नवनिर्माण सेना
+          पुणे शहर
+  </h1>
+        <p>
+          शाखा तिथे झेंडा,
+          झेंडा तिथे राजदुत,
+          सेवेत आपला राजदुत.
+         
+        </p>
+        <button>अधिक एक्सप्लोर करा
+        </button>
+      </div>
+
+      <div class="swiper">
+        <div class="swiper-wrapper">
+
+
+
+          <div class="swiper-slide">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDRYFNIyZ3whhMXPQ7Ins9UOyqlClnGzljGz-L6CkUlwMfXON9Tpp6LqVEsJfdl0nEY7X_AlX3hFNw8YGzdl_fjg4DJtoD4ZjiO8BoF_rAK7Wwx1DPztSqZqU7pHSWBV3SaQqUl2p3-XH-bqjRSHY8lt9XBvmwqGA1S31BO5vhtGSry7UOhoiWOR1yeE1e/s448/2.jpg" />
+            <div class="cost">राज ठाकरे</div>
+            <div class="overlay">
+
+              <hr>
+
+              <h1>राज ठाकरे</h1>
+              <p>
+           ज्याच्या अंगी छत्रपती शिवाजी महाराज भिनले असतील तो माणूस जातीपातीचा विचार कधीच करू शकणार नाही.&quot;           </p>
+
+            </div>
+          </div>
+<hr>
+
+          <div class="swiper-slide">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEinDi5xtd2ClZFPIjX1jikstbC9CS48sDeiYaqVxrDKcaJWe_gyYNwMBMSqKcxOcYELjTHd-damCjoc-UJxK48uiyX2D0iu_BzoKkHK4z9nzPbz7NbSCKK1OSkPW5BBON7kTtb6reXpd-0erCLpKSqcs1msL7xIRl2PGNlRoWVLQD2Mdfwc7Rsd6bcqPFCx/s448/4.jpg" />
+            <div class="cost">अमित ठाकरे</div>
+            <div class="overlay"><hr>
+
+              <h1>अमित ठाकरे</h1>
+              <p>
+                अमित ठाकरे ( मुंबई) हे महाराष्ट्र नवनिर्माण सेना या पक्षाचे नेते आहेत. महाराष्ट्र नवनिर्माण सेनेचे युवानेते श्री. अमित राज ठाकरे.
+              </p>
+
+            </div>
+          </div>
+
+          <hr>
+
+
+          <div class="swiper-slide">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjwL2OmYCSrbs5vSlBPOay-VUlq5v-vb5p2vRrZTQsg3DVg6TKCLVFJ6bAtSoOAyuTRhKIi15SJlSPr97JSZsrqX4TwXIkz6dw_ekkIhlBqTPJujARIfsAKeg8tPUQkiSPMLVNkTUGUJiYUckp4dLd311sgntd-Mo8RDY75HCHo9DZaIb_nVDLO1j8kFxLr/s448/1.jpg" />
+            <div class="cost dark-text">राज ठाकरे</div>
+            <div class="overlay"><hr>
+
+              <h1>राज ठाकरे</h1>
+              <p>
+                आधी ते तुमच्या वर लक्ष देणार नाहीत नंतर ते तुमच्या वर हसतील
+                नंतर ते तुमच्या सोबत भांडतील त्या नंतर तुम्ही जिंकाल
+              </p>
+
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYEvuggY4NH5jkPHgwEJf1Y5J0hKkXjWNnRGH8fmNGqexGmQiPnQ4Be7zG12McZP_ozB2ZCO6dPkxi6JQ-fsCE9HLn8ILJxR1gEFRS8UZbmuxV6sxN7s6a5l53V8DkSnDgGCnjDSMOPU2zgATL7dbQxaCIIDlOdxImSyUERxAZ3VLrVahwK0FYGm_c4nJD/s448/3.jpg" />
+            <div class="cost dark-text">अमित ठाकरे</div>
+            <div class="overlay">
+              <h1>अमित ठाकरे</h1>
+              <p>
+                मतदानाला जाण्यापूर्वी माझं तुम्हा मतदारांना
+                एक आवाहन....
+              </p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    <button class="accordion">जात प्रमाणपत्र (Cast Certificate)
+    </button>
+    <div class="panel">
+      <hr>
+
+
+      <p> १) मुलांचे जन्म दाखले / बोनाफाईड / शाळेचा दाखला</p>
+      <p> २) वडिलांचा शाळेचा दाखला / चुलत्याचा शाळेचा दाखला</p>
+    
+      <p> ३) रक्त नाते संबंधित आजोबा / चुलत आजोबा/आत्या/ चुलत चलते या पेकी जात नमूद असणारा दाखला, जन्म दाखला/</p>
+    
+      <p> ४) रेशनकार्ड लाईट बिल, आधारकार्ड कोणतेही ओळखपत्र ५)स्वा घोषणापत्र, अर्जदाराचा फोटो</p>
+    
+    </p>
+    </div>
+    
+    <button class="accordion">EWS 10% प्रमाणपत्र
+    </button>
+    <div class="panel">
+      <hr>
+
+      <p> १) मुलांचे जन्म दाखला / बोनाफाईड शाळेचा दाखला</p>
+    
+      <p> २) वडिलांचा शाळेचा दाखला</p>
+    
+      <p> ३) रक्त नाते संबंधित १९६७ शाळा सोडल्याचा दाखला आजोबा / चुलत आजोबा/आत्या/ चुलत चुलते या पेकी जात नमुद असणारा दाखला</p>
+    
+      <p> ४) आधारकार्ड, रेशन कार्ड लाईट बिल, ड्रायव्हिंग लायसन्स, मतदान कार्ड, २ फोटो, उत्पन्न दाखला नोकरी असल्यास कॉर्म नंबर १६ / IT RETUR</p>
+    </div>
+    
+    <button class="accordion">वय अधिवास राष्ट्रीयत्व दाखला (Domicle Certificate)
+    </button>
+    <div class="panel"><hr>
+
+      <p>आधारकार्ड, रेशन कार्ड लाईट बिल, स्वताचा शाळा सोडल्याचा दाखला/ जन्म दाखला/ बोनफाईड, वडिलांचा शाळा सोडल्याचा दाखला, १५ वर्ष पुण्यात राहत असल्याबदल ठोस पुरावा (विजविल / टेक्स पावती / महावितरणचे सी. पी. एल प्रमाणपत्र) द्रायव्हिंग लाईसन्स (फक्त ऑटो रिक्षा व परमिट) महिला अर्जदार असल्यास विवाह नोंदणी प्रमाणपत्र / गॅजेट प्रत आधारकार्ड मतदान कार्ड/ ड्रायव्हिंग लायसेन्स/ पासपोर्ट, २ फोटो ( वीजबिल दूस-यांचे नवे असल्यास त्यां व्यक्तीचे संमतीपत्र करणे आवश्यक) ( वय अधिवास आणि राष्ट्रीयत्व प्रमाणपत्र असल्याचे वर्षापूर्वीचे लाईट बिल आवश्यक</p>
+    </div>
+    
+    
+    <button class="accordion">उत्पादनाचा दाखला ( Income Certificate) </button>
+    <div class="panel"><hr>
+
+      <p>आधारकार्ड, रेशन कार्ड, लाईट बिल, तलाठी दाखला. २ फोटो</p>
+    
+       <li>नोकरी असल्याबद्दल
+     </li>
+    
+      <p>फर्म नंबर १६ / IT RETURN वैद्यकीय असल्यास मेडीकल प्रमाणपत्र ( वीजबिल दुस-यांच्या नावे असल्यास त्या व्यक्तीचे समंतीपत्र, अर्जदाराचे त्या पत्यावरील मतदान कार्ड / ड्रायव्हिंग लायसन्स / बैंक पासबुक</p>
+    </div>
+    
+    <button class="accordion"> नॉनक्रिमिलेअर ( Non-Crimlayer Certificate) </button>
+    <div class="panel"><hr>
+
+      <p>
+      १) मुलाचे जन्म दाखले / बोनफाईड / शाळा सोडल्याचा दाखला, मुलाचा जातीचा दाखला   </p>
+      <p>  २) वडिलांचा शाळेचा दाखला,जातीचा दाखला   </p>
+      <p> ३) रेशनकार्ड, आधारकार्ड, तहसिलदार उत्पनदाता किया   </p>
+       <p> ३ वर्षाचे फॉर्म नं. १६ आय टी रिटर्न   </p>
+       <p> ४) अर्जदाराचा फोटो   </p>
+      
+      </p>
+    </div>
+    
+    <button class="accordion">रहिवासी दाखला ( Residence Certificate )</button>
+    <div class="panel"><hr>
+
+      <p>आधारकार्ड, रेशन कार्ड लाईट बिल, स्वताचा शाळा सोडल्याचा दाखला/ जन्म दाखला/ बोनफाईड, वडिलांचा शाळा सोडल्याचा दाखला, १५ वर्ष पुण्यात राहत असल्याबदल ठोस पुरावा (विजविल / टेक्स पावती / महावितरणचे सी. पी. एल प्रमाणपत्र) द्रायव्हिंग लाईसन्स (फक्त ऑटो रिक्षा व परमिट) महिला अर्जदार असल्यास विवाह नोंदणी प्रमाणपत्र / गॅजेट प्रत आधारकार्ड मतदान कार्ड/ ड्रायव्हिंग लायसेन्स/ पासपोर्ट, २ फोटो ( वीजबिल दूस-यांचे नवे असल्यास त्यां व्यक्तीचे संमतीपत्र करणे आवश्यक) ( वय अधिवास आणि राष्ट्रीयत्व प्रमाणपत्र असल्याचे वर्षापूर्वीचे लाईट बिल आवश्यक/p>
+    </div>
+    
+    <button class="accordion">रेशनकार्ड (Ration Card ) </button>
+    
+    
+    <button class="accordion">आधार कार्ड (Aadhar Card )</button>
+    <div class="panel"><hr>
+
+      <p>१) रेशन कार्ड,</p>
+    
+      <p>२) लाईट बिल,</p>
+    
+      <p>३) जन्म दाखला,</p>
+    
+      <p>४) बोनाफाईड,</p>
+    
+      <p>५) पासपोर्ट,</p>
+    
+      <p>६) ड्रायव्हिंग लायसन्स,</p>
+    
+      <p>७) गॅझेट प्रमाणपत्र,</p>
+    
+      <p>८) विवाह नोंदणी प्रमाणपत्र</p>
+    </div>
+    
+    <button class="accordion"> पॅन कार्ड (Pan Card)</button>
+    <div class="panel"><hr>
+
+      <p> १) आधार कार्ड</p>
+    
+    <p> २) २ फोटो</p>
+    </p>
+    </div>
+    
+    <button class="accordion"> ज्येष्ठ नागरिकत्वाचा दाखला (Senior Citizen Certificate)</button>
+    <div class="panel"><hr>
+
+      <p>'शाळेचा सोडल्याचा दाखला, आधारकार्ड, रेशन कार्ड, लाईट बिल, मतदान कार्ड, रक्तगट, </p>
+       <p>२ फोटो (वय वर्षे ६० पूर्ण असणे आवश्यक</p>
+    </div>
+    
+    <button class="accordion">संजय गांधी निराधार योजना ( Sanjay Gandhi Niradhar Yojana) </button>
+    
+    
+    <button class="accordion">श्रावण बाळ योजना (Shravan Bal Yojana)</button>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- partial -->
+  <script src='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/tsparticles@1.26.0/dist/tsparticles.min.js'></script>
+<script src='https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js'></script>
+<script src='https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js'></script>
+
+<script>
+
+// Swiper
+
+var swiper = new Swiper(".swiper", {
+  effect: "cube",
+  grabCursor: true,
+  loop: true,
+  speed: 1000,
+  cubeEffect: {
+    shadow: false,
+    slideShadows: true,
+    shadowOffset: 10,
+    shadowScale: 0.94,
+  },
+  autoplay: {
+    delay: 2600,
+    pauseOnMouseEnter: true,
+  },
+});
+
+// tsParticles
+
+tsParticles.load("tsparticles", {
+  fpsLimit: 60,
+  backgroundMode: {
+    enable: true,
+    zIndex: -1,
+  },
+  particles: {
+    number: {
+      value: 30,
+      density: {
+        enable: true,
+        area: 800,
+      },
+    },
+    color: {
+      value: [
+        "#3998D0",
+        "#2EB6AF",
+        "#A9BD33",
+        "#FEC73B",
+        "#F89930",
+        "#F45623",
+        "#D62E32",
+      ],
+    },
+    destroy: {
+      mode: "split",
+      split: {
+        count: 1,
+        factor: {
+          value: 5,
+          random: {
+            enable: true,
+            minimumValue: 4,
+          },
+        },
+        rate: {
+          value: 10,
+          random: {
+            enable: true,
+            minimumValue: 5,
+          },
+        },
+        particles: {
+          collisions: {
+            enable: false,
+          },
+          destroy: {
+            mode: "none",
+          },
+          life: {
+            count: 1,
+            duration: {
+              value: 1,
+            },
+          },
+        },
+      },
+    },
+    shape: {
+      type: "circle",
+      stroke: {
+        width: 0,
+        color: "#000000",
+      },
+      polygon: {
+        sides: 5,
+      },
+    },
+    opacity: {
+      value: 1,
+      random: false,
+      animation: {
+        enable: false,
+        speed: 1,
+        minimumValue: 0.1,
+        sync: false,
+      },
+    },
+    size: {
+      value: 8,
+      random: {
+        enable: true,
+        minimumValue: 4,
+      },
+      animation: {
+        enable: false,
+        speed: 40,
+        minimumValue: 0.1,
+        sync: false,
+      },
+    },
+    collisions: {
+      enable: true,
+      mode: "destroy",
+    },
+    move: {
+      enable: true,
+      speed: 7,
+      direction: "none",
+      random: false,
+      straight: false,
+      out_mode: "out",
+      attract: {
+        enable: false,
+        rotateX: 600,
+        rotateY: 1200,
+      },
+    },
+  },
+  detectRetina: true,
+});
+
+
+
+
+
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
