@@ -1,4 +1,95 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Design</title>
+  <style>
+    /* General Styling */
+    .spacexs {
+      padding: 6px;
+    }
+
+    .buttonfull {
+      color: #fff;
+      background-color: #1c66c3;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      font-weight: 400;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      padding: 6px 12px;
+    }
+
+    #frame {
+      height: 200px;
+      width: 100%;
+    }
+
+    /* Desktop and Tablet Styling */
+    .entry-content-wrap,
+    .comment-form {
+      width: 130%;
+    }
+
+    /* Sidebar Widgets */
+    .sidebar > .widget,
+    #sidebar-wrapper {
+      display: none;
+    }
+
+    /* Mobile Styling */
+    @media only screen and (max-width: 600px) {
+      .entry-content-wrap,
+      .comment-form {
+        width: 100%;
+      }
+    }
+
+    @media only screen and (max-width: 500px) {
+      #frame {
+        height: 150px; /* Adjust as needed for mobile view */
+        text-align: center;
+      }
+
+      .textmediax {
+        display: block;
+        text-align: center !important;
+      }
+
+      .btncontdown {
+        display: inline-flex !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <div class="spacexs">
+    <div>
+      <!-- Content can be added here if needed -->
+    </div>
+  </div>
+
+  <iframe frameborder="0" id="frame" scrolling="yes" src="https://senpaiisworking.github.io/code_here/course.html"></iframe>
+</div>
+
+<!-- Placeholder button with .buttonfull class -->
+<button class="buttonfull">Click Me</button>
+
+<!-- Placeholder content that appears only on mobile -->
+<div class="textmediax">This is mobile-only text content.</div>
+
+<!-- Example countdown button container -->
+<div class="btncontdown">
+  <button class="buttonfull">Countdown</button>
+</div>
+
+</body>
+</html>
+
 <html>
 <head>
 <script src="https://kit.fontawesome.com/9e6a7d9e5b.js" crossorigin="anonymous"></script>
