@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4361ee">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>QR Code Generator with Logo</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --error: #ff3333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+            --bg-surface: #F8FAFC;
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --text-primary: #1E293B;
+            --text-secondary: #64748B;
+            --border-soft: #E2E8F0;
+            --radius-lg: 16px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .qr-wrap {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 50%;
+            overflow: hidden;
+        }
+        
+        .form-wrap {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .f-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .i-group {
+            display: flex;
+            position: relative;
+        }
+        
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-gen {
+            width: 100%;
+        }
+        
+        .qr-out {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .qr-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 100%;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .ctrl {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .btn-dl, .btn-sh {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-dl {
+            background-color: var(--success);
+        }
+        
+        .btn-dl:hover {
+            background-color: #3a9d35;
+        }
+        
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .val-msg {
+            margin-top: 8px;
+            color: var(--error);
+            font-size: 0.85rem;
+            display: none;
+        }
+        
+        /* Loading animation */
+        .load {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 3px solid rgba(67, 97, 238, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        /* Add to existing CSS */
+.pad-sldr {
+    margin-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+}
+
+
+/* New class for the padded container */
+.qr-pad {
+    padding: 20px; /* Default padding */
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Logo upload section */
+        .logo-sec {
+            margin-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+        
+        .logo-prev {
+            width: 100%;
+            height: 80px;
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .logo-prev img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+        
+        .logo-prev .placeholder {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: center;
+        }
+        
+        .logo-ctrl {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+        
+        .file-wrap {
+            position: relative;
+            flex: 1;
+        }
+        
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .file-lbl {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-slider {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .sldr-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sldr-wrap input {
+            flex: 1;
+        }
+        
+        .sldr-val {
+            font-size: 0.9rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 550px) {
+            .qr-wrap {
+                border-radius: 0;
+            }
+            
+            .ctrl {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-dl, .btn-sh {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .logo-ctrl {
+                flex-direction: column;
+            }
+            
+            .file-wrap {
+                width: 100%;
+            }
+        }
+        .rad-ctrl {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.qr-pad {
+    background-color: white;
+    display: inline-block;
+    border-radius: 0; /* Initial border radius */
+    overflow: hidden; /* Important for maintaining border radius with image */
+}
+
+/* Style for the QR code image to match border radius */
+.qr-pad img,
+.qr-pad canvas {
+    display: block;
+    border-radius: inherit;
+}
+
+/* Add this in your style section */
+.color-ctrl {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.color-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.color-item label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+}
+
+.color-value {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.color-item input[type="color"] {
+    width: 100%;
+    height: 45px;
+    padding: 3px;
+    border: 2px solid var(--border-soft);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    background: white;
+    transition: var(--transition);
+}
+
+.color-item input[type="color"]:hover {
+    border-color: var(--primary);
+}
+
+/* Update Color Picker Styles */
+.color-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.color-item label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.color-value {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    background: var(--bg-surface);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+/* Enhanced Color Input Styles */
+.color-item input[type="color"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 35px;
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* Color Swatch Wrapper */
+.color-item input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: var(--border-radius);
+}
+
+/* Color Swatch */
+.color-item input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: var(--border-radius);
+    height: 6px;
+    margin-top: 14px;
+}
+
+/* Add hover effect */
+.color-item:hover input[type="color"]::-webkit-color-swatch {
+    height: 100%;
+    margin-top: 0;
+    transition: all 0.3s ease;
+}
+
+/* Color Grid Layout */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* Add this JavaScript to update colors dynamically */
+#fg-color {
+    background: #FF0F0F;
+}
+
+#bg-color {
+    background: #110909;
+}
+
+#container-color {
+    background: #FFFFFF;
+}
+
+/* Hover Effects */
+.color-item input[type="color"]:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Active State */
+.color-item input[type="color"]:active {
+    transform: translateY(0);
+}
+
+/* Add these styles to your existing CSS */
+.logo-shape {
+    margin-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+}
+
+.shape-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.shape-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--light);
+    border: 1px solid #e0e0e0;
+    color: var(--dark);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.shape-btn:hover {
+    background: #e9ecef;
+    transform: translateY(0);
+}
+
+.shape-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Update logo size slider for better visibility */
+.logo-slider .sldr-wrap {
+    background: var(--light);
+    padding: 12px;
+    border-radius: var(--border-radius);
+}
+
+.logo-slider input[type="range"] {
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    -webkit-appearance: none;
+}
+
+.logo-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.logo-slider input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Grid Layout Container */
+.form-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* QR Code Settings Section */
+.qr-settings {
+    grid-column: 1 / 2;
+}
+
+/* Logo Settings Section */
+.logo-settings {
+    grid-column: 2 / 3;
+    background: var(--light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+/* Add Logo Padding Control */
+.logo-padding {
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.logo-padding .sldr-wrap {
+    background: white;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    margin-top: 0.5rem;
+}
+
+/* Responsive Grid Layout */
+@media (max-width: 768px) {
+    .form-wrap {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .qr-settings, 
+    .logo-settings {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Modern Card Style */
+.settings-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+}
+
+/* Settings Groups */
+.settings-group {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.control-group {
+    background: var(--light);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+/* Main Container Styles */
+.qr-container {
+    background: var(--bg-surface);
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+}
+
+/* Header Styles */
+.qr-header {
+    background: var(--gradient-primary);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.qr-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(
+        circle at 20% 20%,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+}
+
+.qr-header__title {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.025em;
+}
+
+.qr-header__subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    font-weight: 400;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .qr-header {
+        padding: 2rem 1.5rem;
+    }
+
+    .qr-header__title {
+        font-size: 1.875rem;
+    }
+
+    .qr-header__subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .qr-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .qr-header__title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Update existing responsive styles */
+@media (max-width: 768px) {
+    .qr-wrap {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .form-wrap {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .qr-settings,
+    .logo-settings {
+        grid-column: 1 / -1;
+    }
+
+    .color-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-gen {
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        z-index: 10;
+        border-radius: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        margin: 0;
+    }
+
+    .qr-out {
+        padding: 1rem;
+        margin-bottom: 4rem;
+    }
+
+    .ctrl {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .btn-dl,
+    .btn-sh {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0;
+    }
+
+    .qr-header {
+        padding: 1rem;
+    }
+
+    .qr-header__title {
+        font-size: 1.5rem;
+    }
+
+    .qr-header__subtitle {
+        font-size: 0.875rem;
+    }
+
+    .settings-card {
+        padding: 1rem;
+    }
+
+    .control-group {
+        padding: 0.875rem;
+    }
+
+    .logo-prev {
+        height: 60px;
+    }
+
+    .shape-options {
+        flex-direction: column;
+    }
+
+    .shape-btn {
+        padding: 0.75rem;
+    }
+
+    .sldr-wrap {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .sldr-val {
+        text-align: left;
+    }
+
+    /* Improve touch targets */
+    input[type="range"]::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+    }
+
+    .color-item input[type="color"] {
+        height: 50px;
+    }
+
+    /* Adjust spacing */
+    .pad-sldr,
+    .rad-ctrl,
+    .color-ctrl,
+    .logo-shape {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+/* Add sticky header for mobile */
+@media (max-width: 768px) {
+    .qr-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Add smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem; /* Accounts for fixed header/elements */
+}
+
+.qr-out {
+    scroll-margin-top: 80px; /* Adjusts scroll target position */
+}
+
+@media (max-width: 768px) {
+    .qr-out {
+        scroll-margin-top: 60px;
+    }
+}
+
+/* Improve touch feedback */
+@media (hover: none) {
+    button:active {
+        transform: scale(0.98);
+    }
+
+    .color-item input[type="color"]:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Update the Generate QR Code button styles */
+.btn-gen {
+    grid-column: 1 / -1;  /* Span full width in grid */
+    margin-top: 1.5rem;
+    padding: 1rem 2rem;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1.125rem;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-gen:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Update responsive styles for the button */
+@media (max-width: 768px) {
+    .btn-gen {
+        position: fixed;
+        bottom: 1.25rem;
+        left: 1.25rem;
+        right: 1.25rem;
+        width: calc(100% - 2.5rem);
+        margin: 0;
+        padding: 1rem;
+        border-radius: 2rem;
+        z-index: 100;
+        font-size: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Add padding to prevent content from being hidden behind fixed button */
+    .qr-out {
+        padding-bottom: calc(1rem + 60px);
+    }
+
+    /* Add backdrop blur when button is fixed */
+    .btn-gen::before {
+        content: '';
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        z-index: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-gen {
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        width: calc(100% - 2rem);
+        padding: 0.875rem;
+    }
+}
+
+/* Add active state for touch devices */
+@media (hover: none) {
+    .btn-gen:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+        
+    </style>
+</head>
+<body>
+    <div class="qr-wrap">
+        <div class="qr-header">
+            <h1 class="qr-header__title">QR Code Generator</h1>
+            <p class="qr-header__subtitle">Generate a QR code with your custom logo</p>
+        </div>
+        
+        <div class="form-wrap">
+            <div class="qr-settings settings-card">
+                <div class="settings-group">
+                    <div class="f-group">
+                        <label for="url-input">Enter URL or link</label>
+                        <div class="i-group">
+                            <input 
+                                type="text" 
+                                id="url-input" 
+                                placeholder="https://example.com" 
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="val-msg" id="validation-message">
+                            Please enter a valid URL (e.g., https://example.com)
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="pad-sldr">
+                            <label for="qr-padding">QR Code Padding: </label>
+                            <div class="sldr-wrap">
+                                <input 
+                                    type="range" 
+                                    id="qr-padding" 
+                                    min="0" 
+                                    max="50" 
+                                    step="5" 
+                                    value="20"
+                                >
+                                <span class="sldr-val" id="padding-size-value">20px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rad-ctrl" style="margin-top: 20px;">
+                            <label for="border-radius">Border Radius:</label>
+                            <div class="sldr-wrap">
+                                <input 
+                                    type="range" 
+                                    id="border-radius" 
+                                    min="0" 
+                                    max="50" 
+                                    step="1" 
+                                    value="20"
+                                >
+                                <span class="sldr-val" id="radius-value">0px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="color-ctrl">
+                            <label>QR Code Colors:</label>
+                            <div class="color-grid">
+                                <div class="color-item">
+                                    <label for="fg-color">
+                                        Foreground
+                                        <span class="color-value" id="fg-color-value">#000000</span>
+                                    </label>
+                                    <input type="color" id="fg-color" value="#000000">
+                                </div>
+                                <div class="color-item">
+                                    <label for="bg-color">
+                                        Background
+                                        <span class="color-value" id="bg-color-value">#FFFFFF</span>
+                                    </label>
+                                    <input type="color" id="bg-color" value="#FFFFFF">
+                                </div>
+                                <div class="color-item">
+                                    <label for="container-color">
+                                        Container
+                                        <span class="color-value" id="container-color-value">#FFFFFF</span>
+                                    </label>
+                                    <input type="color" id="container-color" value="#FFFFFF">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="logo-settings">
+                <div class="settings-group">
+                    <div class="logo-sec">
+                        <label>Add your logo (optional)</label>
+                        <div class="logo-prev" id="logo-preview">
+                            <div class="placeholder" id="logo-placeholder">Upload your logo</div>
+                            <img id="logo-image" alt="Logo preview">
+                        </div>
+                        
+                        <div class="logo-ctrl">
+                            <div class="file-wrap">
+                                <input 
+                                    type="file" 
+                                    id="logo-input" 
+                                    class="file-input" 
+                                    accept="image/*"
+                                >
+                                <div class="file-lbl">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 9L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        <path d="M15 12L12 9L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                    Choose File
+                                </div>
+                            </div>
+                            <button id="remove-logo-btn" style="display: none;">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="logo-slider" id="logo-size-container" style="display: none;">
+                        <label for="logo-size">Logo Size: </label>
+                        <div class="sldr-wrap">
+                            <input 
+                                type="range" 
+                                id="logo-size" 
+                                min="10" 
+                                max="30" 
+                                step="1" 
+                                value="20"
+                            >
+                            <span class="sldr-val" id="logo-size-value">20%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="logo-padding">
+                        <label for="logo-padding">Logo Padding</label>
+                        <div class="sldr-wrap">
+                            <input type="range" id="logo-padding" min="0" max="20" value="5">
+                            <span class="sldr-val" id="logo-padding-value">5px</span>
+                        </div>
+                    </div>
+                    
+                    <div class="logo-shape">
+                        <label>Logo Shape:</label>
+                        <div class="shape-options">
+                            <button class="shape-btn active" data-shape="square">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <rect x="3" y="3" width="18" height="18" fill="currentColor"/>
+                                </svg>
+                                Square
+                            </button>
+                            <button class="shape-btn" data-shape="circle">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <circle cx="12" cy="12" r="9" fill="currentColor"/>
+                                </svg>
+                                Circle
+                            </button>
+                            <button class="shape-btn" data-shape="rounded">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor"/>
+                                </svg>
+                                Rounded
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Move button outside of other sections but still within form-wrap -->
+            <button class="btn-gen" id="generate-btn">
+                Generate QR Code
+            </button>
+        </div>
+        
+        <div class="qr-out">
+            <div class="load" id="loading"></div>
+            <div class="qr-box" id="qr-container"></div>
+            <div class="ctrl" id="controls">
+                <button class="btn-dl" id="download-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 13L12 16L15 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 16V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Download
+                </button>
+                <button class="btn-sh" id="share-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 10L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 14L15 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM elements
+    const urlInput = document.getElementById('url-input');
+    const generateBtn = document.getElementById('generate-btn');
+    const qrContainer = document.getElementById('qr-container');
+    const controls = document.getElementById('controls');
+    const downloadBtn = document.getElementById('download-btn');
+    const shareBtn = document.getElementById('share-btn');
+    const validationMessage = document.getElementById('validation-message');
+    const loadingIndicator = document.getElementById('loading');
+    
+    // Logo related elements
+    const logoInput = document.getElementById('logo-input');
+    const logoPreview = document.getElementById('logo-preview');
+    const logoImage = document.getElementById('logo-image');
+    const logoPlaceholder = document.getElementById('logo-placeholder');
+    const removeLogoBtn = document.getElementById('remove-logo-btn');
+    const logoSizeContainer = document.getElementById('logo-size-container');
+    const logoSizeSlider = document.getElementById('logo-size');
+    const logoSizeValue = document.getElementById('logo-size-value');
+
+    // Padding related elements
+    const paddingSlider = document.getElementById('qr-padding');
+    const paddingSizeValue = document.getElementById('padding-size-value'); // Fix: Use correct ID
+
+    // Border radius related elements
+    const borderRadiusSlider = document.getElementById('border-radius');
+    const radiusValue = document.getElementById('radius-value');
+
+    // Color related elements
+    const fgColorInput = document.getElementById('fg-color');
+    const bgColorInput = document.getElementById('bg-color');
+    const containerColorInput = document.getElementById('container-color');
+    
+    // Variables
+    let uploadedLogo = null;
+    let logoSize = 20; // Default logo size in percentage
+    let qrPadding = 20; // Default padding
+    let borderRadius = 0; // Default border radius
+    let currentQRCode = null;
+    let fgColor = '#000000'; // Default foreground color
+    let bgColor = '#FFFFFF'; // Default background color
+    let containerColor = '#FFFFFF'; // Default container color
+    let logoShape = 'square'; // Default shape
+
+    // Add this after your existing DOM elements
+    const shapeButtons = document.querySelectorAll('.shape-btn');
+
+    // Add shape button event listeners
+    shapeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            shapeButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            logoShape = btn.dataset.shape;
+            if (uploadedLogo && currentQRCode) {
+                generateQRCode(currentQRCode);
+            }
+        });
+    });
+    
+    // URL validation
+    function isValidUrl(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === 'http:' || url.protocol === 'https:';
+        } catch (_) {
+            return false;
+        }
+    }
+    
+    // Handle logo upload
+    logoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                uploadedLogo = event.target.result;
+                logoImage.src = uploadedLogo;
+                logoImage.style.display = 'block';
+                logoPlaceholder.style.display = 'none';
+                removeLogoBtn.style.display = 'flex';
+                logoSizeContainer.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    // Handle logo removal
+    removeLogoBtn.addEventListener('click', function() {
+        uploadedLogo = null;
+        logoImage.src = '';
+        logoImage.style.display = 'none';
+        logoPlaceholder.style.display = 'block';
+        removeLogoBtn.style.display = 'none';
+        logoSizeContainer.style.display = 'none';
+        logoInput.value = '';
+    });
+    
+    // Handle logo size change
+    logoSizeSlider.addEventListener('input', function() {
+        logoSize = parseInt(this.value);
+        logoSizeValue.textContent = `${logoSize}%`;
+    });
+
+    // Handle padding change
+    paddingSlider.addEventListener('input', function() {
+        qrPadding = parseInt(this.value);
+        paddingSizeValue.textContent = `${qrPadding}px`; // Fix: Use correct element
+        updateQRCodeStyle();
+    });
+
+    // Handle border radius change
+    borderRadiusSlider.addEventListener('input', function() {
+        borderRadius = parseInt(this.value);
+        radiusValue.textContent = `${borderRadius}px`;
+        updateQRCodeStyle();
+    });
+
+    // Handle color changes
+    fgColorInput.addEventListener('input', function() {
+        fgColor = this.value;
+    });
+
+    bgColorInput.addEventListener('input', function() {
+        bgColor = this.value;
+    });
+
+    containerColorInput.addEventListener('input', function() {
+        containerColor = this.value;
+        updateQRCodeStyle();
+    });
+
+    // Update QR code styling
+    function updateQRCodeStyle() {
+        const wrapper = qrContainer.querySelector('.qr-pad');
+        if (wrapper) {
+            wrapper.style.padding = `${qrPadding}px`;
+            wrapper.style.borderRadius = `${borderRadius}px`;
+            wrapper.style.backgroundColor = containerColor;
+        }
+    }
+    
+    // Generate QR code
+    function generateQRCode(url) {
+        loadingIndicator.style.display = 'block';
+        qrContainer.innerHTML = '';
+        qrContainer.style.display = 'none';
+        controls.style.display = 'none';
+        
+        setTimeout(() => {
+            currentQRCode = url;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'qr-pad';
+            wrapper.style.padding = `${qrPadding}px`;
+            wrapper.style.borderRadius = `${borderRadius}px`;
+            wrapper.style.backgroundColor = containerColorInput.value;
+            qrContainer.innerHTML = '';
+            qrContainer.appendChild(wrapper);
+            
+            new QRCode(wrapper, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark: fgColorInput.value,
+                colorLight: bgColorInput.value,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            if (uploadedLogo) {
+                setTimeout(() => {
+                    addLogoToQRCode(uploadedLogo);
+                }, 50);
+            } else {
+                loadingIndicator.style.display = 'none';
+                qrContainer.style.display = 'block';
+                controls.style.display = 'flex';
+            }
+        }, 800);
+    }
+    
+    // Add logo to QR code
+    function addLogoToQRCode(logoDataUrl) {
+        const wrapper = qrContainer.querySelector('.qr-pad');
+        const qrCanvas = wrapper.querySelector('canvas');
+        if (!qrCanvas) return;
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = qrCanvas.width;
+        canvas.height = qrCanvas.height;
+        
+        ctx.drawImage(qrCanvas, 0, 0, canvas.width, canvas.height);
+        
+        const logoImg = new Image();
+        logoImg.src = logoDataUrl;
+        
+        logoImg.onload = function() {
+            const logoWidth = canvas.width * (logoSize / 100);
+            const scale = logoWidth / logoImg.width;
+            const logoHeight = logoImg.height * scale;
+            
+            // Add padding to logo
+            const paddedLogoWidth = logoWidth + (logoPadding * 2);
+            const paddedLogoHeight = logoHeight + (logoPadding * 2);
+            
+            const logoX = (canvas.width - paddedLogoWidth) / 2;
+            const logoY = (canvas.height - paddedLogoHeight) / 2;
+            
+            // Create temporary canvas for the shaped and padded logo
+            const logoCanvas = document.createElement('canvas');
+            logoCanvas.width = paddedLogoWidth;
+            logoCanvas.height = paddedLogoHeight;
+            const logoCtx = logoCanvas.getContext('2d');
+            
+            // Apply shape with padding
+            switch(logoShape) {
+                case 'circle':
+                    logoCtx.beginPath();
+                    logoCtx.arc(paddedLogoWidth/2, paddedLogoHeight/2, 
+                        Math.min(logoWidth, logoHeight)/2 + logoPadding, 0, Math.PI * 2);
+                    logoCtx.closePath();
+                    logoCtx.clip();
+                    break;
+                // ...other cases...
+            }
+            
+            // Draw white background and logo with padding
+            logoCtx.fillStyle = "white";
+            logoCtx.fillRect(0, 0, paddedLogoWidth, paddedLogoHeight);
+            logoCtx.drawImage(logoImg, logoPadding, logoPadding, logoWidth, logoHeight);
+            
+            // Draw the shaped and padded logo onto the main canvas
+            ctx.drawImage(logoCanvas, logoX, logoY);
+            
+            const qrImg = wrapper.querySelector('img');
+            if (qrImg) {
+                qrImg.src = canvas.toDataURL('image/png');
+            } else {
+                const newImg = document.createElement('img');
+                newImg.src = canvas.toDataURL('image/png');
+                wrapper.innerHTML = '';
+                wrapper.appendChild(newImg);
+            }
+            
+            loadingIndicator.style.display = 'none';
+            qrContainer.style.display = 'block';
+            controls.style.display = 'flex';
+        };
+    }
+    
+    // Handle download
+    function downloadQRCode() {
+        const wrapper = qrContainer.querySelector('.qr-pad');
+        const qrImg = wrapper.querySelector('img');
+        
+        if (qrImg) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const totalWidth = qrImg.width + (qrPadding * 2);
+            const totalHeight = qrImg.height + (qrPadding * 2);
+            
+            canvas.width = totalWidth;
+            canvas.height = totalHeight;
+            
+            // Create rounded rectangle path
+            ctx.beginPath();
+            ctx.moveTo(borderRadius, 0);
+            ctx.lineTo(totalWidth - borderRadius, 0);
+            ctx.quadraticCurveTo(totalWidth, 0, totalWidth, borderRadius);
+            ctx.lineTo(totalWidth, totalHeight - borderRadius);
+            ctx.quadraticCurveTo(totalWidth, totalHeight, totalWidth - borderRadius, totalHeight);
+            ctx.lineTo(borderRadius, totalHeight);
+            ctx.quadraticCurveTo(0, totalHeight, 0, totalHeight - borderRadius);
+            ctx.lineTo(0, borderRadius);
+            ctx.quadraticCurveTo(0, 0, borderRadius, 0);
+            ctx.closePath();
+            
+            // Fill white background
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            
+            // Clip to rounded rectangle
+            ctx.clip();
+            
+            // Draw QR code
+            ctx.drawImage(qrImg, qrPadding, qrPadding);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = canvas.toDataURL('image/png');
+            downloadLink.download = 'qrcode-with-style.png';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    }
+    
+    // Handle share
+    async function shareQRCode() {
+        const qrImg = qrContainer.querySelector('img');
+        
+        if (qrImg && navigator.share) {
+            try {
+                const response = await fetch(qrImg.src);
+                const blob = await response.blob();
+                const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+                
+                await navigator.share({
+                    title: 'QR Code',
+                    text: 'Check out this QR code!',
+                    files: [file]
+                });
+            } catch (error) {
+                console.error('Error sharing:', error);
+                alert('Unable to share. Your browser may not support this feature.');
+            }
+        } else {
+            alert('Sharing is not supported on your device.');
+        }
+    }
+    
+    // Event listeners
+    generateBtn.addEventListener('click', function() {
+        const url = urlInput.value.trim();
+        
+        if (isValidUrl(url)) {
+            validationMessage.style.display = 'none';
+            generateQRCode(url);
+            
+            // Add smooth scroll to QR output section
+            setTimeout(() => {
+                const qrOutput = document.querySelector('.qr-out');
+                qrOutput.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center'
+                });
+            }, 850); // Slightly longer than the QR generation timeout
+        } else {
+            validationMessage.style.display = 'block';
+            qrContainer.style.display = 'none';
+            controls.style.display = 'none';
+        }
+    });
+    
+    urlInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            generateBtn.click();
+        }
+    });
+    
+    downloadBtn.addEventListener('click', downloadQRCode);
+    shareBtn.addEventListener('click', shareQRCode);
+    
+    // Focus input on load
+    urlInput.focus();
+
+    // Add color change event listeners
+    [fgColorInput, bgColorInput, containerColorInput].forEach(picker => {
+        picker.addEventListener('change', () => {
+            if (currentQRCode) {
+                generateQRCode(currentQRCode);
+            }
+        });
+    });
+
+    // Add to your existing JavaScript
+    const logoPaddingSlider = document.getElementById('logo-padding');
+    const logoPaddingValue = document.getElementById('logo-padding-value');
+    let logoPadding = 5; // Default logo padding
+
+    logoPaddingSlider.addEventListener('input', function() {
+        logoPadding = parseInt(this.value);
+        logoPaddingValue.textContent = `${logoPadding}px`;
+        if (uploadedLogo && currentQRCode) {
+            generateQRCode(currentQRCode);
+        }
+    });
+
+    // Update the addLogoToQRCode function to include padding
+    function addLogoToQRCode(logoDataUrl) {
+        const wrapper = qrContainer.querySelector('.qr-pad');
+        const qrCanvas = wrapper.querySelector('canvas');
+        if (!qrCanvas) return;
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = qrCanvas.width;
+        canvas.height = qrCanvas.height;
+        
+        ctx.drawImage(qrCanvas, 0, 0, canvas.width, canvas.height);
+        
+        const logoImg = new Image();
+        logoImg.src = logoDataUrl;
+        
+        logoImg.onload = function() {
+            const logoWidth = canvas.width * (logoSize / 100);
+            const scale = logoWidth / logoImg.width;
+            const logoHeight = logoImg.height * scale;
+            
+            // Add padding to logo
+            const paddedLogoWidth = logoWidth + (logoPadding * 2);
+            const paddedLogoHeight = logoHeight + (logoPadding * 2);
+            
+            const logoX = (canvas.width - paddedLogoWidth) / 2;
+            const logoY = (canvas.height - paddedLogoHeight) / 2;
+            
+            // Create temporary canvas for the shaped and padded logo
+            const logoCanvas = document.createElement('canvas');
+            logoCanvas.width = paddedLogoWidth;
+            logoCanvas.height = paddedLogoHeight;
+            const logoCtx = logoCanvas.getContext('2d');
+            
+            // Apply shape with padding
+            switch(logoShape) {
+                case 'circle':
+                    logoCtx.beginPath();
+                    logoCtx.arc(paddedLogoWidth/2, paddedLogoHeight/2, 
+                        Math.min(logoWidth, logoHeight)/2 + logoPadding, 0, Math.PI * 2);
+                    logoCtx.closePath();
+                    logoCtx.clip();
+                    break;
+                // ...other cases...
+            }
+            
+            // Draw white background and logo with padding
+            logoCtx.fillStyle = "white";
+            logoCtx.fillRect(0, 0, paddedLogoWidth, paddedLogoHeight);
+            logoCtx.drawImage(logoImg, logoPadding, logoPadding, logoWidth, logoHeight);
+            
+            // Draw the shaped and padded logo onto the main canvas
+            ctx.drawImage(logoCanvas, logoX, logoY);
+            
+            const qrImg = wrapper.querySelector('img');
+            if (qrImg) {
+                qrImg.src = canvas.toDataURL('image/png');
+            } else {
+                const newImg = document.createElement('img');
+                newImg.src = canvas.toDataURL('image/png');
+                wrapper.innerHTML = '';
+                wrapper.appendChild(newImg);
+            }
+            
+            loadingIndicator.style.display = 'none';
+            qrContainer.style.display = 'block';
+            controls.style.display = 'flex';
+        };
+    }
+
+    // Add to your existing JavaScript event listeners
+    const fgColorValue = document.getElementById('fg-color-value');
+    const bgColorValue = document.getElementById('bg-color-value');
+    const containerColorValue = document.getElementById('container-color-value');
+
+    fgColorInput.addEventListener('input', function() {
+        fgColor = this.value;
+        fgColorValue.textContent = this.value.toUpperCase();
+    });
+
+    bgColorInput.addEventListener('input', function() {
+        bgColor = this.value;
+        bgColorValue.textContent = this.value.toUpperCase();
+    });
+
+    containerColorInput.addEventListener('input', function() {
+        containerColor = this.value;
+        containerColorValue.textContent = this.value.toUpperCase();
+        updateQRCodeStyle();
+    });
+
+    // Add inside your DOMContentLoaded event listener
+
+    function updateColorPickerStyle(picker) {
+        const swatch = picker.value;
+        picker.style.backgroundColor = `${swatch}15`; // Light background
+        picker.style.boxShadow = `0 0 0 1px ${swatch}40`; // Colored border
+    }
+
+    // Update color pickers on input
+    [fgColorInput, bgColorInput, containerColorInput].forEach(picker => {
+        picker.addEventListener('input', function() {
+            updateColorPickerStyle(this);
+            if (this.id === 'fg-color') {
+                fgColor = this.value;
+                fgColorValue.textContent = this.value.toUpperCase();
+            } else if (this.id === 'bg-color') {
+                bgColor = this.value;
+                bgColorValue.textContent = this.value.toUpperCase();
+            } else {
+                containerColor = this.value;
+                containerColorValue.textContent = this.value.toUpperCase();
+                updateQRCodeStyle();
+            }
+        });
+        
+        // Initialize color picker styles
+        updateColorPickerStyle(picker);
+    });
+});
+    </script>
+</body>
+</html>
