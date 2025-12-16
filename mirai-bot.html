@@ -14,24 +14,89 @@
   font-size: 15px;
   color: #fff;
   text-align: center;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px;
-  line-height: 20px;
+  width: 800px;
+  line-height: 24px;
+  padding: 20px;
+}
+
+.botext .section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.botext .tagline {
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  color: #e0e0e0;
+}
+
+.botext .section {
+  margin: 20px 0;
+  text-align: left;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border-left: 3px solid #fff;
+}
+
+.botext .section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #fff;
+  letter-spacing: 1.5px;
+}
+
+.botext .section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.botext .section li {
+  padding: 5px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.botext .section li:before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #fff;
 }
 
 
 @media only screen and (max-width: 600px) {
   .botext{
     font-size: 12px;
-    width: 319px;
+    width: 90%;
+    max-width: 350px;
     top: 26%;
-    left: 181px;
-    
-
+    left: 50%;
+    padding: 15px;
+  }
+  
+  .botext .section-title {
+    font-size: 18px;
+  }
+  
+  .botext .tagline {
+    font-size: 14px;
+  }
+  
+  .botext .section h3 {
+    font-size: 14px;
   }
 }
 
@@ -86,16 +151,16 @@ h1 .touch {
   bottom: 0;
   width: 100%;
   height: 150px;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8be5b+0,f4b44b+100 */
-  background: #f8be5b;
+  /* Floor gradient */
+  background: #555e65;
   /* Old browsers */
-  background: -moz-linear-gradient(top, #f8be5b 0%, #f4b44b 100%);
+  background: -moz-linear-gradient(top, #010e22 0%, #555e65 100%);
   /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #f8be5b 0%, #f4b44b 100%);
+  background: -webkit-linear-gradient(top, #010e22 0%, #555e65 100%);
   /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #f8be5b 0%, #f4b44b 100%);
+  background: linear-gradient(to bottom, #010e22 0%, #555e65 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f8be5b", endColorstr="#f4b44b",GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#010e22", endColorstr="#555e65",GradientType=0 );
   /* IE6-9 */
 }
 .backgroundnoy .sand .mountains {
@@ -210,10 +275,15 @@ h1 .touch {
 <div class="backgroundnoy">
 
   <div class="botext">
-    <p style="font-size: 22px;  font-weight: bold;
-    ">ABOUT</p>
- Hello! Welcome to Codesempai - A space created just for fun and to share some useful, interesting stuff. I'm a laid-back programmer who loves experimenting across various domains. I frequently post my content here, so feel free to check it out and explore. Whether it's coding projects, tech insights, or random experiments, you'll find a mix of everything that sparks my curiosity. Dive in, enjoy, and maybe even find some inspiration for your own projects!
+    <p style="font-size: 22px; font-weight: bold; margin-bottom: 15px;">ABOUT US</p>
+    <p style="font-size: 18px; font-weight: 300; margin-bottom: 20px; letter-spacing: 2px;">Mirai Robotics (Education)</p>
+    <p style="font-size: 16px; margin-bottom: 20px; letter-spacing: 1px;">Learn. Build. Lead.</p>
+    
+    <p style="text-align: center; margin-bottom: 15px;">
+      Welcome to Mirai Robotics, where we empower the next generation of innovators through hands-on robotics education. We believe in learning by doing, building by creating, and leading by example. Our mission is to make robotics education accessible, engaging, and transformative for students and educators alike.
+    </p>
 
+  
 
 
 
